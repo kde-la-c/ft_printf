@@ -14,7 +14,7 @@ NAME		= libftprintf.a
 SRC			= 
 
 OBJS		= $(SRC:%.c=%.o)
-INCLUDE		= ft_printf.h
+INCLUDE		= ft_printf.h $(NAME)
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 AR			= ar
@@ -25,7 +25,10 @@ RFLAGS		= -f
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(INCLUDE)
-			@$(AR) $(AFLAGS) $(NAME) $(OBJS) $(INCLUDE)
+			@$(MAKE) -C ./libft
+			@$(MAKE) clean -C ./libft
+			@cp ./libft/libft.a $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) $(INCLUDE)
 			@echo "\033[0;32m--- Printf compiled successfully! ---\033[0m"
 
 clean:

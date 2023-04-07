@@ -12,6 +12,38 @@
 
 #include "ft_printf.h"
 
+int	ft_cmpchr(char *set, char c)
+{
+	int i;
+
+	i = 0;
+	while (set[i])
+		if (c == set[i++])
+			return (1);
+	return (0);
+}
+
+int	nbargs(char *str)
+{
+	int i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if (str[i] == '%' && ft_cmpchr("cspdiuxX%", str[i + 1]))
+		{
+			n++;
+			i++;
+		}
+		else if (str[i] == '%' && !ft_cmpchr("cspdiuxX%", str[i + 1]))
+			return (-1);
+		i++;
+	}
+	return (n);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		ret;
@@ -39,9 +71,13 @@ int	ft_printf(const char *str, ...)
 
 int	main()
 {
-	int i;
+	int		i;
+	char	*str = "int :, %c%c%char :, rien :, mais :%";
 
-	i = ft_printf("hola", " que", " tal");
+	// i = ft_printf("hola", " que", " tal");
+	// printf("ret :%i\n", i);
+
+	i = nbargs(str);
 	printf("ret :%i\n", i);
 	return 0;
 }

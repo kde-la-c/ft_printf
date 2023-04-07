@@ -25,10 +25,7 @@ RFLAGS		= -f
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(INCLUDE)
-			@$(MAKE) -C ./libft
-			@$(MAKE) clean -C ./libft
-			@cp ./libft/libft.a $(NAME)
-			@$(CC) $(CFLAGS) $(OBJS) $(INCLUDE)
+			@$(AR) $(AFLAGS) $(NAME) $(OBJS) $(INCLUDE)
 			@echo "\033[0;32m--- Printf compiled successfully! ---\033[0m"
 
 clean:

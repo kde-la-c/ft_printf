@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 NAME		= libftprintf.a
-SRC			= 
+SRC			= ft_printf.c
 
 OBJS		= $(SRC:%.c=%.o)
-INCLUDE		= ft_printf.h $(NAME)
+INCLUDE		= ft_printf.h libft.h
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 AR			= ar

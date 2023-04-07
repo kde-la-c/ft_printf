@@ -12,17 +12,6 @@
 
 #include "ft_printf.h"
 
-int	ft_cmpchr(char *set, char c)
-{
-	int i;
-
-	i = 0;
-	while (set[i])
-		if (c == set[i++])
-			return (1);
-	return (0);
-}
-
 int	nbargs(char *str)
 {
 	int i;
@@ -44,40 +33,69 @@ int	nbargs(char *str)
 	return (n);
 }
 
+void	putarg(void *arg, char c)
+{
+	if (c == 'c')
+		ft_putchar_fd((char)arg, 1);
+	else if (c == 's')
+		ft_putstr_fd(arg, 1);
+	else if (c == 'p')
+		c = 'p';
+	else if (c == 'd')
+		ft_putnbr_fd((int)arg, 1); //adjust to decimal
+	else if (c == 'i')
+		ft_putnbr_fd((int)arg, 1);
+	else if (c == 'u')
+		ft_putnbr_fd((unsigned int)arg, 1);
+	else if (c == 'x')
+		c = 'x';
+	else if (c == 'X')
+		c = 'X';
+	else if (c == '%')
+		c = '%';
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		ret;
 	int		i;
 	int		n;
-	char	*arg;
+	void	*arg;
 	va_list	ap;
 
-	n = 2;
 	i = 0;
 	ret = 0;
-	ft_putstr_fd((char*)str, 1);
-	ret += strlen(str);
+	n = nbargs((char*)str);
+	if (n == -1)
+		return (n);
 	va_start(ap, str);
 	while (i < n)
 	{
-		arg = va_arg(ap, char*);
-		ft_putstr_fd(arg, 1);
-		ret += strlen(arg);
+		if (*str)
+		{
+			write(1, str, ft_strchr(str, '%') - str);
+			str += ft_strchr(str, '%') - str;
+			str++;
+		}
+		arg = va_arg(ap, void*);
+		putarg(arg, *str);
+		str++;
 		i++;
 	}
 	va_end(ap);
+	ft_putstr_fd((char*)str, 1);
 	return (ret);
 }
 
 int	main()
 {
 	int		i;
-	char	*str = "int :, %c%c%char :, rien :, mais :%";
+	// char	*str = "ho.la.";
 
-	// i = ft_printf("hola", " que", " tal");
+	i = ft_printf("hola %d, %s", 123, "woaw");
+	// printf("ret :%li\n", ft_strchr(str, '.') - str);
+
+	// i = nbargs(str);
 	// printf("ret :%i\n", i);
-
-	i = nbargs(str);
-	printf("ret :%i\n", i);
 	return 0;
 }

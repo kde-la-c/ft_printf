@@ -11,10 +11,18 @@
 # **************************************************************************** #
 
 NAME		= libftprintf.a
-SRC			= ft_printf.c
+SRC			= ft_printf.c\
+			src/ft_putnbr_fd.c\
+			src/ft_putnbr_base_fd.c\
+			src/ft_putchar_fd.c\
+			src/ft_putstr_fd.c\
+			src/ft_cmpchr.c\
+			src/ft_strchr.c\
+			src/ft_ischrrep.c\
+			src/ft_strlen.c\
 
 OBJS		= $(SRC:%.c=%.o)
-INCLUDE		= ft_printf.h libft.h
+INCLUDE		= ft_printf.h
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 AR			= ar

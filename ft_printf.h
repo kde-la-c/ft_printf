@@ -15,10 +15,22 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
 # include <stdarg.h>
-# include "libft.h"
+// # include "libft.h"
 
 int		ft_printf(const char *, ...);
+
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
+
+int		ft_cmpchr(char *set, char c);
+int		ft_putnbr_base_fd(int nbr, char *base, int fd);
+int		ft_ischrrep(char *str);
 
 #endif

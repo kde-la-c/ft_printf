@@ -13,6 +13,7 @@
 a.out
 libft.h
 autre/*
+*.dSYM
 *.o
 *.a
 *.gch

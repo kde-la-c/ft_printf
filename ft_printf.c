@@ -33,26 +33,30 @@ int	nbargs(char *str)
 	return (n);
 }
 
-void	putarg(void *arg, char c)
+int	putarg(void *arg, char c)
 {
+	int	ret;
+
+	ret = 0;
 	if (c == 'c')
-		ft_putchar_fd((char)arg, 1);
+		ret = ft_putchar_fd((char)arg, 1);
 	else if (c == 's')
-		ft_putstr_fd(arg, 1);
+		ret = ft_putstr_fd(arg, 1);
 	else if (c == 'p')
 		c = 'p';
 	else if (c == 'd')
-		ft_putnbr_fd((int)arg, 1); //adjust to decimal
+		ret = ft_putnbr_fd((int)arg, 1);
 	else if (c == 'i')
-		ft_putnbr_fd((int)arg, 1);
+		ret = ft_putnbr_fd((int)arg, 1);
 	else if (c == 'u')
-		ft_putnbr_fd((unsigned int)arg, 1);
+		ret = ft_putnbr_fd((unsigned int)arg, 1);
 	else if (c == 'x')
-		c = 'x';
+		ret = ft_putnbr_base_fd((int)arg, "0123456789abcdef", 1);
 	else if (c == 'X')
-		c = 'X';
+		ret = ft_putnbr_base_fd((int)arg, "0123456789ABCDEF", 1);
 	else if (c == '%')
-		c = '%';
+		ret = ft_putchar_fd('%', 1);
+	return (ret);
 }
 
 int	ft_printf(const char *str, ...)
@@ -73,17 +77,17 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str)
 		{
-			write(1, str, ft_strchr(str, '%') - str);
+			ret += write(1, str, ft_strchr(str, '%') - str);
 			str += ft_strchr(str, '%') - str;
 			str++;
 		}
 		arg = va_arg(ap, void*);
-		putarg(arg, *str);
+		ret += putarg(arg, *str);
 		str++;
 		i++;
 	}
 	va_end(ap);
-	ft_putstr_fd((char*)str, 1);
+	ret += ft_putstr_fd((char*)str, 1);
 	return (ret);
 }
 
@@ -92,7 +96,8 @@ int	main()
 	int		i;
 	// char	*str = "ho.la.";
 
-	i = ft_printf("hola %d, %s", 123, "woaw");
+	i = ft_printf("hola %s, %s\n", "woaw", "!!!!!!!!!!!!!");
+	printf("i :%i\n", i);
 	// printf("ret :%li\n", ft_strchr(str, '.') - str);
 
 	// i = nbargs(str);

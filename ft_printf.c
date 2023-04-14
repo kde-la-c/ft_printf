@@ -45,7 +45,7 @@ int	putarg(void *arg, char c)
 	else if (c == 'p')
 	{
 		ret = ft_putstr_fd("0x", 1);
-		ret += ft_putnbr_base_fd((int)arg, "0123456789abcdef", 1); //handle
+		ret += ft_putnbr_base_fd((int)arg, "0123456789abcdef", 1); //handle prefix
 	}
 	else if (c == 'd')
 		ret = ft_putnbr_fd((int)arg, 1);
@@ -72,17 +72,25 @@ int	ft_printf(const char *str, ...)
 	if (nbargs((char*)str) == -1)
 		return (-1);
 	va_start(ap, str);
-	while (nbargs((char*)str))  //try iterating str with i
+	while (nbargs((char*)str) && str)  //try iterating str with i
 	{
-		if (*str)
+		if (*str != '%')
 		{
 			ret += write(1, str, ft_strchr(str, '%') - str);
-			str += ft_strchr(str, '%') - str;
+			str += ft_strchr(str, '%') - (str - 1);
 			str++;
 		}
-		arg = va_arg(ap, void*);
-		ret += putarg(arg, *str);
-		str++;
+		else if (*(str - 1) == '%' && *(str) == '%')
+		{
+			str++;
+			ret += ft_putchar_fd(*(str++), 1);
+		}
+		else
+		{
+			str++;
+			arg = va_arg(ap, void*);
+			ret += putarg(arg, *(str++));
+		}
 	}
 	va_end(ap);
 	ret += ft_putstr_fd((char*)str, 1);

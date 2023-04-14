@@ -41,9 +41,10 @@ int	putarg(void *arg, char c)
 	if (c == 'c')
 		ret = ft_putchar_fd((char)arg, 1);
 	else if (c == 's')
-		ret = ft_putstr_fd(arg, 1);
+		ret = ft_putstr_fd((char *)arg, 1);
 	else if (c == 'p')
 	{
+		ret = ft_putstr_fd("0x", 1);
 		ret += ft_putnbr_base_fd((int)arg, "0123456789abcdef", 1); //handle
 	}
 	else if (c == 'd')
@@ -86,25 +87,4 @@ int	ft_printf(const char *str, ...)
 	va_end(ap);
 	ret += ft_putstr_fd((char*)str, 1);
 	return (ret);
-}
-
-int	main()
-{
-	int		ft;
-	int		nat;
-	char	*base = "hola%%%i\n";
-	int		i = 55;
-	// char	*str = "HOLLA";
-
-	printf("nat :\n");
-	nat = printf(base, i);
-	printf("%i\n", nat);
-	printf("-----\n");
-	printf("ft :\n");
-	ft = ft_printf(base, i);
-	printf("%i\n", ft);
-
-	// i = nbargs(str);
-	// printf("ret :%i\n", i);
-	return 0;
 }

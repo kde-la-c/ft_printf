@@ -12,7 +12,7 @@
 
 #include "../ft_printf.h"
 
-int	ft_putstr_fd(char *s, int fd)
+/* int	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
@@ -23,4 +23,16 @@ int	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 	return (i);
+} */
+
+int	ft_putstr_fd(char *s, int fd)
+{
+	int	ret;
+
+	ret = 0;
+	if (!s)
+		ret = write(fd, "(null)", 6);
+	else
+		ret = write(fd, &s[0], ft_strlen(s));
+	return (ret);
 }

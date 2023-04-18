@@ -24,6 +24,27 @@
 	return (n);
 }*/
 
+int	nbargs(char *str)
+{
+	int i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if (str[i] == '%' && ft_cmpchr("cspdiuxX%", str[i + 1]))
+		{
+			n++;
+			i++;
+		}
+		else if (str[i] == '%' && !ft_cmpchr("cspdiuxX%", str[i + 1]))
+			return (-1);
+		i++;
+	}
+	return (n);
+}
+
 int	putarg(va_list ap, char c)
 {
 	int	ret;

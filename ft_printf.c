@@ -108,11 +108,15 @@ int	ft_printf(const char *str, ...)
 			str += ft_strchr(str, '%') - str;
 			str++;
 			ret += putarg(ap, *str);
+			str++;
 		}
 		else
+		{
 			ret += ft_putstr_fd((char*)str, 1);
+			str += ft_strlen(str);
+		}
 	}
-	
+	va_end(ap);
 	return (ret);
 }
 

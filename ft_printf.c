@@ -33,7 +33,7 @@ int	nbargs(char *str)
 	return (n);
 }
 
-int	putarg(void *arg, char c)
+/* int	_putarg(va_list ap, char c)
 {
 	int	ret;
 
@@ -41,7 +41,7 @@ int	putarg(void *arg, char c)
 	if (c == 'c')
 		ret = ft_putchar_fd((char)arg, 1);
 	else if (c == 's')
-		ret = ft_putstr_fd((char *)arg, 1);
+		ret = ft_putstr_fd((char*)arg, 1);
 	else if (c == 'p')
 	{
 		ret = ft_putstr_fd("0x", 1);
@@ -60,9 +60,65 @@ int	putarg(void *arg, char c)
 	else if (c == '%')
 		ret = ft_putchar_fd('%', 1);
 	return (ret);
+} */
+
+int	putarg(va_list ap, char c)
+{
+	int	ret;
+
+	ret = 0;
+	if (c == 'c')
+		ret = ft_putchar_fd(va_arg(ap, int), 1);
+	else if (c == 's')
+		ret = ft_putstr_fd(va_arg(ap, char*), 1);
+	else if (c == 'p')
+	{
+		ret = ft_putstr_fd("0x", 1);
+		ret += ft_putnbr_base_fd(va_arg(ap, int), "0123456789abcdef", 1);
+	}
+	else if (c == 'd')
+		ret = ft_putnbr_fd(va_arg(ap, int), 1);
+	else if (c == 'i')
+		ret = ft_putnbr_fd(va_arg(ap, int), 1);
+	else if (c == 'u')
+		ret = ft_putnbr_fd(va_arg(ap, unsigned int), 1);
+	else if (c == 'x')
+		ret = ft_putnbr_base_fd(va_arg(ap, unsigned int), "0123456789abcdef", 1);
+	else if (c == 'X')
+		ret = ft_putnbr_base_fd(va_arg(ap, unsigned int), "0123456789ABCDEF", 1);
+	else if (c == '%')
+		ret = ft_putchar_fd('%', 1);
+	return (ret);
 }
 
 int	ft_printf(const char *str, ...)
+{
+	int		ret;
+	va_list	ap;
+
+	ret = 0;
+	if (nbargs((char*)str) == -1)
+		return (-1);
+	va_start(ap, str);
+	while (str)
+	{
+		if (nbargs((char*)str))
+		{
+			ret += write(1, str, ft_strchr(str, '%') - str);
+			str += ft_strchr(str, '%') - str;
+			str++;
+			ret += putarg(ap, *str);
+		}
+		else
+			ret += ft_putstr_fd((char*)str, 1);
+	}
+	
+	return (ret);
+}
+
+// "hola %i que %s tal"
+
+/* int	ft_printf(const char *str, ...)
 {
 	int		ret;
 	void	*arg;
@@ -95,4 +151,4 @@ int	ft_printf(const char *str, ...)
 	va_end(ap);
 	ret += ft_putstr_fd((char*)str, 1);
 	return (ret);
-}
+} */

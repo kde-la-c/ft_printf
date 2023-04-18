@@ -100,23 +100,14 @@ int	ft_printf(const char *str, ...)
 	if (nbargs((char*)str) == -1)
 		return (-1);
 	va_start(ap, str);
-	while (str)
+	while (str && nbargs((char*)str))
 	{
-		if (nbargs((char*)str))
-		{
-			ret += write(1, str, ft_strchr(str, '%') - str);
-			str += ft_strchr(str, '%') - str;
-			str++;
-			ret += putarg(ap, *str);
-			str++;
-		}
-		else
-		{
-			ret += ft_putstr_fd((char*)str, 1);
-			str += ft_strlen(str);
-		}
+		ret += write(1, str, ft_strchr(str, '%') - str);
+		str += ft_strchr(str, '%') - str;
+		str++;
+		ret += putarg(ap, *(str++));
 	}
-	va_end(ap);
+	ret += ft_putstr_fd((char*)str, 1);
 	return (ret);
 }
 

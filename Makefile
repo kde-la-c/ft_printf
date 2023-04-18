@@ -14,6 +14,7 @@ NAME		= libftprintf.a
 SRC			= ft_printf.c\
 			src/ft_putnbr_fd.c\
 			src/ft_putnbr_base_fd.c\
+			src/ft_putnbru_base_fd.c\
 			src/ft_putchar_fd.c\
 			src/ft_putstr_fd.c\
 			src/ft_cmpchr.c\

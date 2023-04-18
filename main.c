@@ -1,24 +1,41 @@
 #include "ft_printf.h"
-// "hola%sque%%"
-int	main()
+
+void test(char *str, ...)
+{
+	va_list	ap;
+
+	va_start(ap, str);
+	printf("%i\n", va_arg(ap, int));
+	printf("%i\n", va_arg(ap, int));
+	printf("%i\n", va_arg(ap, int));
+	va_end(ap);
+}
+
+int main()
+{
+	test("hey", 1, 2);
+	return 0;
+}
+
+/* int	main()
 {
 	int		ft;
 	int		nat;
-	char	*base = "hola%s %i %c ";
-	int		i = 55;
-	char	*str = "aaa";
-	char	s = 'a';
+	char	*base = "hola%u ";
+	int		i = -55;
+	// char	*str = "aaa";
+	// char	s = 'a';
 
 	printf("nat :\n");
-	nat = printf(base, str, i, s);
+	nat = printf(base, i);
 	printf("\n%i\n", nat);
 	printf("-----\n");
 	printf("ft :\n");
-	ft = ft_printf(base, str, i, s);
+	ft = ft_printf(base, i);
 	printf("\n%i\n", ft);
 
 	return 0;
-}
+} */
 
 /* int	main()
 {

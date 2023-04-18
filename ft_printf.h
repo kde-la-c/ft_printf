@@ -27,6 +27,7 @@ char	*ft_strchr(const char *s, int c);
 int		ft_putchar_fd(char c, int fd);
 int		ft_putstr_fd(char *s, int fd);
 int		ft_putnbr_fd(int n, int fd);
+int		ft_putnbru_base_fd(unsigned int nbr, char *base, int fd);
 
 int		ft_cmpchr(char *set, char c);
 int		ft_putnbr_base_fd(int nbr, char *base, int fd);

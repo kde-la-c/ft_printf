@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-void test(char *str, ...)
+/* void test(char *str, ...)
 {
 	va_list	ap;
 
@@ -9,33 +9,34 @@ void test(char *str, ...)
 	printf("%i\n", va_arg(ap, int));
 	printf("%i\n", va_arg(ap, int));
 	va_end(ap);
-}
+} */
 
-int main()
+/* int main()
 {
 	test("hey", 1, 2);
 	return 0;
-}
+} */
 
-/* int	main()
+int	main()
 {
 	int		ft;
 	int		nat;
-	char	*base = "hola%u ";
-	int		i = -55;
-	// char	*str = "aaa";
+	char	*base = "%p";
+	// int		*i = -14523;
+	char	*str = malloc(2);
 	// char	s = 'a';
 
 	printf("nat :\n");
-	nat = printf(base, i);
+	nat = printf(base, "");
 	printf("\n%i\n", nat);
 	printf("-----\n");
 	printf("ft :\n");
-	ft = ft_printf(base, i);
+	ft = ft_printf(base, "");
 	printf("\n%i\n", ft);
+	printf("sizeof :%lu\n", sizeof(str));
 
 	return 0;
-} */
+}
 
 /* int	main()
 {

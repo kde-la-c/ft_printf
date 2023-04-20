@@ -16,21 +16,15 @@ int	ft_ischrrep(char *str)
 {
 	int		i;
 	int		j;
-	char	*set;
 
 	i = 0;
-	set = malloc(ft_strlen(str) + 1);
-	set[0] = str[0];
 	while (str[i])
 	{
 		j = 0;
-		while (set[j] && j < i)
-			if (str[i] != set[j++])
-				set[i] = str[i];
-			else
+		while (str[j] && j < i)
+			if (!(str[i] != str[j++]))
 				return (1);
 		i++;
 	}
-	free(set);
 	return (0);
 }

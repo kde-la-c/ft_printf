@@ -25,8 +25,8 @@ int	ft_putnbru_base_fd(unsigned int nbr, char *base, int fd)
 		ret += write(fd, &base[nbr], 1);
 	else if (nbr >= blen)
 	{
-		ret += ft_putnbr_base_fd(nbr / blen, base, fd);
-		ret += ft_putnbr_base_fd(nbr % blen, base, fd);
+		ret += ft_putnbru_base_fd(nbr / blen, base, fd);
+		ret += ft_putnbru_base_fd(nbr % blen, base, fd);
 	}
 	return (ret);
 }

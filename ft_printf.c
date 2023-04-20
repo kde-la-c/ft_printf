@@ -35,29 +35,34 @@ int	nbargs(char *str)
 
 int	putarg(va_list ap, char c)
 {
-	int	ret;
-
-	ret = 0;
 	if (c == 'c')
-		ret = ft_putchar_fd(va_arg(ap, int), 1);
+		return (ft_putchar_fd(va_arg(ap, int), 1));
 	else if (c == 's')
-		ret = ft_putstr_fd(va_arg(ap, char*), 1);
+		return (ft_putstr_fd(va_arg(ap, char*), 1));
 	else if (c == 'p')
-	{
-		ret = ft_putstr_fd("0x", 1);
-		ret += ft_putnbru_base_fd(va_arg(ap, int), "0123456789abcdef", 1);
-	}
+		if (ft_putstr_fd("0x", 1) == 2)
+			return (ft_putnbrul_base_fd(va_arg(ap, long), "0123456789abcdef", 1) + 2);
+		else
+			return (-1);
 	else if (c == 'd' || c == 'i')
-		ret = ft_putnbr_fd(va_arg(ap, int), 1);
+		return (ft_putnbr_fd(va_arg(ap, int), 1));
 	else if (c == 'u')
-		ret = ft_putnbru_base_fd(va_arg(ap, int), "0123456789", 1);
+		return (ft_putnbru_base_fd(va_arg(ap, int), "0123456789", 1));
 	else if (c == 'x')
-		ret = ft_putnbru_base_fd(va_arg(ap, int), "0123456789abcdef", 1);
+		return (ft_putnbru_base_fd(va_arg(ap, int), "0123456789abcdef", 1));
 	else if (c == 'X')
-		ret = ft_putnbru_base_fd(va_arg(ap, int), "0123456789ABCDEF", 1);
+		return (ft_putnbru_base_fd(va_arg(ap, int), "0123456789ABCDEF", 1));
 	else if (c == '%')
-		ret = ft_putchar_fd('%', 1);
-	return (ret);
+		return (ft_putchar_fd('%', 1));
+	return (-1);
+}
+
+int	check_ret(int ret, int wrote)
+{
+	if (wrote != -1)
+		return (ret + wrote);
+	else
+		return (wrote);
 }
 
 int	ft_printf(const char *str, ...)
@@ -71,48 +76,15 @@ int	ft_printf(const char *str, ...)
 	va_start(ap, str);
 	while (str && nbargs((char*)str))
 	{
-		ret += write(1, str, ft_strchr(str, '%') - str);
+		ret = check_ret(ret, write(1, str, ft_strchr(str, '%') - str));
+		if (ret == -1)
+			return (-1);
 		str += ft_strchr(str, '%') - str;
 		str++;
-		ret += putarg(ap, *(str++));
+		ret = check_ret(ret, putarg(ap, *(str++)));
+		if (ret == -1)
+			return (-1);
 	}
-	ret += ft_putstr_fd((char*)str, 1);
+	ret = check_ret(ret, ft_putstr_fd((char*)str, 1));
 	return (ret);
 }
-
-// "hola %i que %s tal"
-
-/* int	ft_printf(const char *str, ...)
-{
-	int		ret;
-	void	*arg;
-	va_list	ap;
-
-	ret = 0;
-	if (nbargs((char*)str) == -1)
-		return (-1);
-	va_start(ap, str);
-	while (nbargs((char*)str) && str)  //try iterating str with i
-	{
-		if (*str != '%')
-		{
-			ret += write(1, str, ft_strchr(str, '%') - str);
-			str += ft_strchr(str, '%') - (str - 1);
-			str++;
-		}
-		else if (*(str - 1) == '%' && *(str) == '%')
-		{
-			str++;
-			ret += ft_putchar_fd(*(str++), 1);
-		}
-		else
-		{
-			str++;
-			arg = va_arg(ap, void*);
-			ret += putarg(arg, *(str++));
-		}
-	}
-	va_end(ap);
-	ret += ft_putstr_fd((char*)str, 1);
-	return (ret);
-} */

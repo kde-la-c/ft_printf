@@ -14,7 +14,7 @@
 
 int	nbargs(char *str)
 {
-	int i;
+	int	i;
 	int	n;
 
 	i = 0;
@@ -38,12 +38,13 @@ int	putarg(va_list ap, char c)
 	if (c == 'c')
 		return (ft_putchar_fd(va_arg(ap, int), 1));
 	else if (c == 's')
-		return (ft_putstr_fd(va_arg(ap, char*), 1));
+		return (ft_putstr_fd(va_arg(ap, char *), 1));
 	else if (c == 'p')
 		if (ft_putstr_fd("0x", 1) == 2)
-			return (ft_putnbrul_base_fd(va_arg(ap, long), "0123456789abcdef", 1) + 2);
-		else
-			return (-1);
+			return (ft_putnbrul_base_fd(va_arg(ap, long), "0123456789abcdef", 1)
+				+ 2);
+	else
+		return (-1);
 	else if (c == 'd' || c == 'i')
 		return (ft_putnbr_fd(va_arg(ap, int), 1));
 	else if (c == 'u')
@@ -71,10 +72,10 @@ int	ft_printf(const char *str, ...)
 	va_list	ap;
 
 	ret = 0;
-	if (nbargs((char*)str) == -1)
+	if (nbargs((char *)str) == -1)
 		return (-1);
 	va_start(ap, str);
-	while (str && nbargs((char*)str))
+	while (str && nbargs((char *)str))
 	{
 		ret = check_ret(ret, write(1, str, ft_strchr(str, '%') - str));
 		if (ret == -1)
@@ -85,6 +86,6 @@ int	ft_printf(const char *str, ...)
 		if (ret == -1)
 			return (-1);
 	}
-	ret = check_ret(ret, ft_putstr_fd((char*)str, 1));
+	ret = check_ret(ret, ft_putstr_fd((char *)str, 1));
 	return (ret);
 }

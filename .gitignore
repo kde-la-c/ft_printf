@@ -12,7 +12,8 @@
 
 a.out
 libft.h
-autre/*
+main
+main.c
 *.dSYM
 *.o
 *.a

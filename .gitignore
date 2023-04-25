@@ -12,7 +12,6 @@
 
 a.out
 libft.h
-main
 main.c
 *.dSYM
 *.o

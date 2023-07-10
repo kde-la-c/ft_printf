@@ -21,12 +21,12 @@ int	nbargs(char *str)
 	n = 0;
 	while (str[i])
 	{
-		if (str[i] == '%' && ft_cmpchr("cspdiuxX%", str[i + 1]))
+		if (str[i] == '%' && ft_strchr("cspdiuxX%", str[i + 1]))
 		{
 			n++;
 			i++;
 		}
-		else if (str[i] == '%' && !ft_cmpchr("cspdiuxX%", str[i + 1]))
+		else if (str[i] == '%' && !ft_strchr("cspdiuxX%", str[i + 1]))
 			return (-1);
 		i++;
 	}

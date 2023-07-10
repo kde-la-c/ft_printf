@@ -17,7 +17,6 @@ SRC			= ft_printf.c\
 			src/ft_putnbru_base_fd.c\
 			src/ft_putnbrul_base_fd.c\
 			src/ft_putstr_fd.c\
-			src/ft_cmpchr.c\
 			src/ft_strchr.c\
 			src/ft_ischrrep.c\
 			src/ft_strlen.c\
